@@ -1,4 +1,4 @@
-package Implementation;
+package PeakFinding;
 import java.util.Random;
 
 
