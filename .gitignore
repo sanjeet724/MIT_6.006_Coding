@@ -15,6 +15,7 @@ $RECYCLE.BIN/
 *.msp
 \.metadata
 \.recommenders
+\sas
 
 # Windows shortcuts
 *.lnk
