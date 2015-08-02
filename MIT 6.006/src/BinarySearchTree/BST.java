@@ -12,7 +12,7 @@ public class BST {
 		heightOfTree = -2;
 	}
 	
-	// inserts a new node into the BST
+	// Insertion
 	public void insertNode (Node n){
 		Node y = null;
 		Node x = this.root; // pointer to find the position of insert
@@ -36,7 +36,6 @@ public class BST {
 		else {
 			y.rightChild = n;
 		}
-		numberOfNodes++;
 		System.out.printf("%02d key Inserted", n.key);
 		System.out.println();
 	}
@@ -62,7 +61,7 @@ public class BST {
 		if  (x == null || k == x.key){
 			return x;
 		}
-		if (k <  x.leftChild.key){
+		if (k <  x.key){
 			b.root = x.leftChild;
 			return RecursiveSearch(b,k);
 			}
@@ -84,6 +83,18 @@ public class BST {
 		}
 		return x;
 	}
-
+	
+	// Inorder Traversal
+	public void InorderTraversal(BST b){
+		 Node x = b.root;
+		 if ( x != null){
+			 b.root = x.leftChild;
+			 InorderTraversal(b);
+			 System.out.printf("%02d ", x.key);
+			 b.root = x.rightChild;
+			 InorderTraversal(b);
+		 }
+	}
+	
 }
 
