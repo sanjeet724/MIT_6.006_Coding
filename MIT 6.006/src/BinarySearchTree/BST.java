@@ -3,6 +3,8 @@ package BinarySearchTree;
 
 public class BST {
 	Node root;
+	// This one is needed because in recursive function calls root is globally changed
+	Node root_master; 
 	int numberOfNodes;
 	int heightOfTree;
 	
@@ -29,6 +31,7 @@ public class BST {
 		n.parent = y;
 		if (y == null) {
 			this.root = n;
+			this.root_master = n;
 		}
 		else if(n.key < y.key){
 			y.leftChild = n;
@@ -94,6 +97,16 @@ public class BST {
 			 b.root = x.rightChild;
 			 InorderTraversal(b);
 		 }
+	}
+	
+	public void ResetRootAfterRecursiveFunctionCalls(){
+		this.root = this.root_master;
+	}
+	
+	public void RepresentationInvariant(){
+		System.out.println();
+		System.out.println("Root is " + this.root);
+		System.out.println("Root is " + this.root_master);;
 	}
 	
 }

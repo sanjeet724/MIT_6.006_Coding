@@ -20,9 +20,9 @@ public class driver {
 		System.out.printf("Maximum of the BST is %d \n", max.key);
 		// find key 15 - we have 2 implementations for search
 		// iterative and recursive
-		Node f = bst.IterativeSearch(15);
+		// Node f = bst.IterativeSearch(15);
 
-		// Node f = bst.RecursiveSearch(bst,15);
+		Node f = bst.RecursiveSearch(bst,15);
 		// Recursive function is changing the pointers.Needs to be fixed
 		if (f == null) {
 			System.out.println("Key not found\n");
@@ -30,10 +30,12 @@ public class driver {
 		else {
 			System.out.println("Key found\n");
 		}
-	
+		bst.ResetRootAfterRecursiveFunctionCalls();
 		// Inorder traversal
 		System.out.println("Inorder Traversal: ");
 		bst.InorderTraversal(bst);
+		bst.ResetRootAfterRecursiveFunctionCalls();
+
 	}
 
 }
