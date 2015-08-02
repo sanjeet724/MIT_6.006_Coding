@@ -1,39 +1,62 @@
 package BinarySearchTree;
 
+
 public class BST {
-	node root;
-	int heightOfBST = -1;
+	Node root;
+	int numberOfNodes;
+	int heightOfTree;
 	
-	public void insertKey(int k) {
-		if (heightOfBST == -1) { // inserting the root node
-			heightOfBST = 0 ; // because the only root node is a leaf node
-			root = new node();
-			root.key = k;
-			root.leftChild = null;
-			root.rightChild = null;
-			root.parentNode = null;
-			
-		}
-		else {
-			node insertedNode = new node();
-			insertedNode.parentNode = root;
-			if (k <= root.key) {
-		
-				root.leftChild = insertedNode;
+	public BST() {
+		root = null;
+		numberOfNodes = 0;
+		heightOfTree = -2;
+	}
+	
+	// inserts a new node into the BST
+	public void insertNode (Node n){
+		Node y = null;
+		Node x = this.root; // pointer to find the position of insert
+		while (x != null){
+			// find the position of insert
+			y = x;
+			if (n.key < x.key){
+				x = x.leftChild;
 			}
 			else {
-				root.rightChild = insertedNode;
+				x = x.rightChild;
 			}
-			
 		}
+		n.parent = y;
+		if (y == null) {
+			this.root = n;
+		}
+		else if(n.key < y.key){
+			y.leftChild = n;
+		}
+		else {
+			y.rightChild = n;
+		}
+		numberOfNodes++;
+		System.out.printf("%02d key Inserted", n.key);
+		System.out.println();
 	}
-	  
-	private class node {
-		int key ;
-		int heightofNode = 0;
-		node leftChild = null;
-		node rightChild = null;
-		node parentNode = null;
+	
+	public Node BSTMin(){
+		Node x = this.root;
+		while (x.leftChild != null){
+			x = x.leftChild;
+		}
+		return x;
 	}
+	
+	public Node BSTMax(){
+		Node x = root;
+		while (x.rightChild != null){
+			x = x.rightChild;
+		}
+		return x;
+	}
+	
+
 }
 
