@@ -50,13 +50,40 @@ public class BST {
 	}
 	
 	public Node FindMax(){
-		Node x = root;
+		Node x = this.root;
 		while (x.rightChild != null){
 			x = x.rightChild;
 		}
 		return x;
 	}
 	
+	public Node RecursiveSearch(BST b, int k) {
+		Node x = b.root;
+		if  (x == null || k == x.key){
+			return x;
+		}
+		if (k <  x.leftChild.key){
+			b.root = x.leftChild;
+			return RecursiveSearch(b,k);
+			}
+		else {
+			b.root = x.rightChild;
+			return RecursiveSearch(b,k);
+			}
+	}
+	
+	public Node IterativeSearch(int k) {
+		Node x = this.root;
+		while (x != null && k != x.key){
+			if (k < x.key){
+				x = x.leftChild;
+			}
+			else {
+				x = x.rightChild;
+			}
+		}
+		return x;
+	}
 
 }
 
