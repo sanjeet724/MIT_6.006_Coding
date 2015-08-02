@@ -41,7 +41,7 @@ public class BST {
 		System.out.println();
 	}
 	
-	public Node BSTMin(){
+	public Node FindMin(){
 		Node x = this.root;
 		while (x.leftChild != null){
 			x = x.leftChild;
@@ -49,7 +49,7 @@ public class BST {
 		return x;
 	}
 	
-	public Node BSTMax(){
+	public Node FindMax(){
 		Node x = root;
 		while (x.rightChild != null){
 			x = x.rightChild;

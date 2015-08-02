@@ -11,10 +11,10 @@ public class driver {
 			Node n = new Node(randomGenerator.nextInt(100));
 			bst.insertNode(n);
 		}
-		Node min = bst.BSTMin();
+		Node min = bst.FindMin();
 		System.out.println();
 		System.out.printf("Minimum of the BST is %d ", min.key);
-		Node max = bst.BSTMax();
+		Node max = bst.FindMax();
 		System.out.println();
 		System.out.printf("Maximum of the BST is %d ", max.key);
 	}
