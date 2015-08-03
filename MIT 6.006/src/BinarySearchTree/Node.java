@@ -8,10 +8,10 @@ class Node {
 	Node rightChild;
 	
 	public Node(int k) {
-		this.key = k;
-		this.heightOfNode = -1;
-		this.parent = null;
-		this.leftChild = null;
-		this.rightChild = null;
+		key = k;
+		heightOfNode = -1;
+		parent = null;
+		leftChild = null;
+		rightChild = null;
 	}
 }
