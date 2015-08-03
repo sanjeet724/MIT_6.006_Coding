@@ -21,8 +21,7 @@ public class driver {
 		// find key 15 - we have 2 implementations for search
 		// iterative and recursive
 		// Node f = bst.IterativeSearch(15);
-
-		Node f = bst.RecursiveSearch(bst,15);
+		Node f = bst.RecursiveSearch(15);
 		if (f == null) {
 			System.out.println("Key not found\n");
 		}
@@ -32,6 +31,7 @@ public class driver {
 		// Inorder traversal
 		System.out.println("Inorder Traversal: ");
 		bst.InorderTraversal();
+		// bst.RepresentationInvariant();
 
 	}
 

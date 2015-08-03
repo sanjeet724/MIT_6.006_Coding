@@ -59,8 +59,8 @@ public class BST {
 		return x;
 	}
 	
-	public Node RecursiveSearch(BST b, int k) {
-		Node x = b.current;
+	public Node RecursiveSearch(int k) {
+		Node x = current;
 		// base case
 		if  (x == null || k == x.key){
 			current = root; // reset the current pointer
@@ -68,12 +68,12 @@ public class BST {
 		}
 		// recursion
 		if (k <  x.key){
-			b.current = x.leftChild;
-			return RecursiveSearch(b,k);
+			current = x.leftChild;
+			return RecursiveSearch(k);
 			}
 		else {
-			b.current = x.rightChild;
-			return RecursiveSearch(b,k);
+			current = x.rightChild;
+			return RecursiveSearch(k);
 			}
 	}
 	
