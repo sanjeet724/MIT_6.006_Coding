@@ -17,7 +17,7 @@ public class BST {
 	// Insertion
 	public void insertNode (Node n){
 		Node y = null;
-		Node x = this.root; // pointer to find the position of insert
+		Node x = root; // pointer to find the position of insert
 		while (x != null){
 			// find the position of insert
 			y = x;
@@ -30,8 +30,8 @@ public class BST {
 		}
 		n.parent = y;
 		if (y == null) {
-			this.root = n;
-			this.current = n;
+			root = n;
+			current = n;
 		}
 		else if(n.key < y.key){
 			y.leftChild = n;
@@ -104,6 +104,30 @@ public class BST {
 			 // reset the current pointer
 			 current = root;
 		 }
+	}
+	// height of a node = length (# edges) of longest downward path to a leaf
+	// height of a node = max{height of left child,height of right child} + 1
+	// height of a leaf node = 0
+	// height of a null node = -1
+	public int getHeightofBST(){
+		Node x = current;
+		// base case
+		if ( x == null) {
+			current = root; // reset the current pointer to root
+			return -1;
+		}
+		else {
+			current = x.leftChild;
+		    int heightOfLeftChild = getHeightofBST();
+		    current = x.rightChild;
+		    int heightOfRightChild = getHeightofBST();
+		    if (heightOfLeftChild > heightOfRightChild){
+		    	return heightOfLeftChild + 1;
+		    }
+		    else {
+		    	return heightOfRightChild + 1;
+		    }
+		}
 	}
 	
 	public void RepresentationInvariant(){

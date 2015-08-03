@@ -12,27 +12,23 @@ public class driver {
 			Node n = new Node(randomGenerator.nextInt(100));
 			bst.insertNode(n);
 		}
-		// find the minimum
 		Node min = bst.FindMin();
 		System.out.printf("Minimum of the BST is %02d \n", min.key);
-		// find the maximum
 		Node max = bst.FindMax();
 		System.out.printf("Maximum of the BST is %02d \n", max.key);
-		// find key 15 - we have 2 implementations for search
+		// find a given key - we have 2 implementations for search
 		// iterative and recursive
 		// Node f = bst.IterativeSearch(15);
 		Node f = bst.RecursiveSearch(15);
 		if (f == null) {
-			System.out.println("Key not found\n");
+			System.out.println("Key not found");
 		}
 		else {
 			System.out.println("Key found\n");
 		}
-		// Inorder traversal
 		System.out.println("Inorder Traversal: ");
 		bst.InorderTraversal();
+		System.out.println("\nHeight of the BST is: " + bst.getHeightofBST());
 		// bst.RepresentationInvariant();
-
 	}
-
 }
