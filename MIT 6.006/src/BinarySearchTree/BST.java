@@ -130,6 +130,23 @@ public class BST {
 		}
 	}
 	
+	public void delete(Node n){
+		Node temp = IterativeSearch(n.key);
+		if (temp == null){
+			System.out.println("No such key found");
+			return;
+		}
+		if (temp.leftChild == null || temp.rightChild == null){
+			// if a leaf node
+			temp = null;
+			return;
+		}
+		else {
+			// not a leaf node
+		}
+		
+	}
+	
 	public void RepresentationInvariant(){
 		System.out.println();
 		System.out.println("Root is " + this.root);
