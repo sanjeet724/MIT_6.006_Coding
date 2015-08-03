@@ -3,13 +3,13 @@ package BinarySearchTree;
 
 public class BST {
 	Node root;
-	// This one is needed because in recursive function calls root is globally changed
-	Node root_master; 
+	Node current; 
 	int numberOfNodes;
 	int heightOfTree;
 	
 	public BST() {
 		root = null;
+		current = root;
 		numberOfNodes = 0;
 		heightOfTree = -2;
 	}
@@ -31,7 +31,7 @@ public class BST {
 		n.parent = y;
 		if (y == null) {
 			this.root = n;
-			this.root_master = n;
+			this.current = n;
 		}
 		else if(n.key < y.key){
 			y.leftChild = n;
@@ -60,16 +60,19 @@ public class BST {
 	}
 	
 	public Node RecursiveSearch(BST b, int k) {
-		Node x = b.root;
+		Node x = b.current;
+		// base case
 		if  (x == null || k == x.key){
+			current = root; // reset the current pointer
 			return x;
 		}
+		// recursion
 		if (k <  x.key){
-			b.root = x.leftChild;
+			b.current = x.leftChild;
 			return RecursiveSearch(b,k);
 			}
 		else {
-			b.root = x.rightChild;
+			b.current = x.rightChild;
 			return RecursiveSearch(b,k);
 			}
 	}
@@ -88,25 +91,25 @@ public class BST {
 	}
 	
 	// Inorder Traversal
-	public void InorderTraversal(BST b){
-		 Node x = b.root;
+	public void InorderTraversal(){
+		 Node x = current;
 		 if ( x != null){
-			 b.root = x.leftChild;
-			 InorderTraversal(b);
+			 current = x.leftChild;
+			 InorderTraversal();
 			 System.out.printf("%02d ", x.key);
-			 b.root = x.rightChild;
-			 InorderTraversal(b);
+			 current = x.rightChild;
+			 InorderTraversal();
 		 }
-	}
-	
-	public void ResetRootAfterRecursiveFunctionCalls(){
-		this.root = this.root_master;
+		 else {
+			 // reset the current pointer
+			 current = root;
+		 }
 	}
 	
 	public void RepresentationInvariant(){
 		System.out.println();
 		System.out.println("Root is " + this.root);
-		System.out.println("Root is " + this.root_master);;
+		System.out.println("Current is " + this.current);;
 	}
 	
 }
