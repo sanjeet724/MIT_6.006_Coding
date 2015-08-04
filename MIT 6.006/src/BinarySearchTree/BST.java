@@ -78,7 +78,7 @@ public class BST {
 	}
 	
 	public Node IterativeSearch(int k) {
-		Node x = this.root;
+		Node x = root;
 		while (x != null && k != x.key){
 			if (k < x.key){
 				x = x.leftChild;
@@ -90,7 +90,7 @@ public class BST {
 		return x;
 	}
 	
-	// Inorder Traversal
+	// In-order Traversal
 	public void InorderTraversal(){
 		 Node x = current;
 		 if ( x != null){
@@ -130,21 +130,112 @@ public class BST {
 		}
 	}
 	
-	public void delete(Node n){
-		Node temp = IterativeSearch(n.key);
-		if (temp == null){
-			System.out.println("No such key found");
-			return;
-		}
-		if (temp.leftChild == null || temp.rightChild == null){
-			// if a leaf node
-			temp = null;
+	// Successor and Predecessor can be found using iterative search
+	// No need to duplicate code
+	
+	public void deleteNode(int k){
+		Node nodeTobeDeleted = IterativeSearch(k);
+		if (nodeTobeDeleted == null ) {
+			System.out.println("No such node found");
 			return;
 		}
 		else {
-			// not a leaf node
+			System.out.println("Node to be deleted: " + nodeTobeDeleted.key);
+			//System.out.println("Node's parent: " + nodeTobeDeleted.parent.key);
+			/*
+			if ( nodeTobeDeleted.leftChild == null && nodeTobeDeleted.leftChild == null) {
+				// leaf node
+				if (nodeTobeDeleted.parent.leftChild == null ){
+					// node to be deleted was right child;
+					System.out.println("Node's rightChild: " + nodeTobeDeleted.parent.leftChild.key);
+					nodeTobeDeleted.parent.rightChild = null;
+					nodeTobeDeleted.parent = null;
+					nodeTobeDeleted = null;
+				}
+				else if ( nodeTobeDeleted.parent.rightChild == null) {
+					// node to be deleted was left child;
+					System.out.println("Node's leftChild: " + nodeTobeDeleted.parent.rightChild.key);
+					nodeTobeDeleted.parent.leftChild = null;
+					nodeTobeDeleted.parent = null;
+					nodeTobeDeleted = null;
+				}
+				else {
+					System.out.println("Printing stuff here");
+				}
+			}
+			*/
+			
 		}
-		
+		/*
+		if (nodeTobeDeleted != null ){
+			Node parentNode = nodeTobeDeleted.parent;
+			// leaf node
+			if (nodeTobeDeleted.leftChild == null && nodeTobeDeleted.rightChild == null){
+				if (parentNode.leftChild != null){
+					parentNode.leftChild = null;
+					nodeTobeDeleted.parent = null;
+				}
+				else {
+					parentNode.rightChild = null;
+					nodeTobeDeleted.parent = null;
+				}
+			return;
+			}
+			
+			// non-leaf node having 1 child
+			if (nodeTobeDeleted.leftChild == null || nodeTobeDeleted.rightChild == null) {
+				// the node doesn't have a left child
+				if (nodeTobeDeleted.leftChild == null) {
+					Node successor = nodeTobeDeleted.rightChild;
+					if (parentNode.leftChild != null ){
+						parentNode.leftChild = successor;
+						successor.parent = parentNode;
+						nodeTobeDeleted.parent = null;
+					}
+					else {
+						parentNode.rightChild = successor;
+						successor.parent = parentNode;
+						nodeTobeDeleted.parent = null;
+					}
+				}
+			   else {
+				// the node doesn't have a right child
+				   Node successor = nodeTobeDeleted.leftChild;
+				   if (parentNode.leftChild != null){
+					  parentNode.rightChild = successor;
+					  successor.parent = parentNode;
+					  nodeTobeDeleted.parent = null;
+				   }
+				   else {
+					  parentNode.leftChild = successor;
+					  successor.parent = parentNode;
+					  nodeTobeDeleted.parent = null;
+				  }
+			   }
+			 return;
+			}
+			// non-leaf node having 2 children
+	
+			Node successor = nodeTobeDeleted.rightChild;
+			if (successor.leftChild != null) {
+				// the successor has a left child
+				if (parentNode.leftChild.key == nodeTobeDeleted.key){
+					parentNode.leftChild = successor;
+					successor.parent = parentNode;
+					successor.leftChild.leftChild = nodeTobeDeleted.leftChild;
+					nodeTobeDeleted.leftChild.parent = successor.leftChild;
+				}
+				else {
+					parentNode.rightChild = successor;
+					successor.parent = parentNode;
+					successor.leftChild = nodeTobeDeleted.leftChild;
+					nodeTobeDeleted.leftChild.parent = successor;
+				}
+			}
+			}
+			*/
+
+
 	}
 	
 	public void RepresentationInvariant(){
