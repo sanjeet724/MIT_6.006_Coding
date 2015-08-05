@@ -140,33 +140,37 @@ public class BST {
 			System.out.println("No such node found");
 			return null;
 		}
-		else {
-			if (x.rightChild instanceof Node) {
-				// case 1
-				Node temp = x.rightChild;
-				while (temp.leftChild != null){
-					temp = temp.leftChild;
-				}
-				return temp;
-			}
-			else {
-				// case 2
-				if (x.parent.leftChild instanceof Node) {
-					// if its a leaf node and left child
-					return x.parent;
-				}
-				Node temp = x.parent;
-				while (temp.parent != null) {
-				if (temp.parent.leftChild instanceof Node){
-						// if its a left child return its parent
-						return temp.parent;
-					}
-					temp = temp.parent;
-				}
-				// else its the root
-				return temp;
-			}
+		// test if its the max node
+		Node max = FindMax();
+		if (max.key == x.key){
+			System.out.println("Its the max key");
+			return null;
 		}
+		if (x.rightChild instanceof Node) {
+			// case 1
+			Node temp = x.rightChild;
+			while (temp.leftChild != null){
+				temp = temp.leftChild;
+			}
+			return temp;
+		}
+		else {
+			// case 2
+			if (x.parent.leftChild instanceof Node) {
+			// if its a leaf node and left child
+				return x.parent;
+			}
+			Node temp = x.parent;
+			while (temp.parent != null) {
+				if (temp.parent.leftChild instanceof Node){
+					// if its a left child return its parent
+					return temp.parent;
+				}
+				temp = temp.parent;
+			}
+			// else its the root
+			return temp;
+    	}
 	}
 	
 	public void deleteNode(int k){
