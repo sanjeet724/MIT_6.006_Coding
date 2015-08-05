@@ -39,7 +39,6 @@ public class BST {
 		else {
 			y.rightChild = n;
 		}
-		//System.out.printf("%02d-->", n.key);
 	}
 	
 	public Node FindMin(){
@@ -129,8 +128,46 @@ public class BST {
 		}
 	}
 	
-	// Successor and Predecessor can be found using iterative search
-	// No need to duplicate code
+	// Finds the next node larger than key given
+	// Case 1: x has a right sub-tree where all keys are larger than x.key. The next larger key will be
+	// the minimum key of x’s right sub-tree.
+	// Case 2: x has no right sub-tree. We can find the next larger key by traversing up x’s ancestry
+	// until we reach a node that’s a left child. That node’s parent will contain the next larger key
+
+	public Node nextLarger(int k){
+		Node x = IterativeSearch(k);
+		if (x == null){
+			System.out.println("No such node found");
+			return null;
+		}
+		else {
+			if (x.rightChild instanceof Node) {
+				// case 1
+				Node temp = x.rightChild;
+				while (temp.leftChild != null){
+					temp = temp.leftChild;
+				}
+				return temp;
+			}
+			else {
+				// case 2
+				if (x.parent.leftChild instanceof Node) {
+					// if its a leaf node and left child
+					return x.parent;
+				}
+				Node temp = x.parent;
+				while (temp.parent != null) {
+				if (temp.parent.leftChild instanceof Node){
+						// if its a left child return its parent
+						return temp.parent;
+					}
+					temp = temp.parent;
+				}
+				// else its the root
+				return temp;
+			}
+		}
+	}
 	
 	public void deleteNode(int k){
 		Node nodeTobeDeleted = IterativeSearch(k);
@@ -139,8 +176,8 @@ public class BST {
 			return;
 		}
 		else {
+			// case 1 - leaf node
 			if (nodeTobeDeleted.leftChild == null && nodeTobeDeleted.leftChild == null) {
-				// leaf node
 				if (nodeTobeDeleted.parent.leftChild instanceof Node ){
 					// node to be deleted was left child
 					nodeTobeDeleted.parent.leftChild = null;
@@ -151,6 +188,7 @@ public class BST {
 					nodeTobeDeleted.parent.rightChild = null;
 					nodeTobeDeleted = null;
 				}
+			// case 2 - node has 1 child	
 		}	
 		}
 		/*
