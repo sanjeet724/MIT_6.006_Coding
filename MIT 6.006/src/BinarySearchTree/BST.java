@@ -180,90 +180,55 @@ public class BST {
 			return;
 		}
 		else {
-			// case 1 - leaf node
-			if (nodeTobeDeleted.leftChild == null && nodeTobeDeleted.leftChild == null) {
-				if (nodeTobeDeleted.parent.leftChild instanceof Node ){
-					// node to be deleted was left child
-					nodeTobeDeleted.parent.leftChild = null;
-					nodeTobeDeleted = null;
-				}
-				else {
-					// node to be deleted was right child;
-					nodeTobeDeleted.parent.rightChild = null;
-					nodeTobeDeleted = null;
-				}
-			// case 2 - node has 1 child	
-		}	
-		}
-		/*
-		if (nodeTobeDeleted != null ){
-			Node parentNode = nodeTobeDeleted.parent;
-			// leaf node
-			if (nodeTobeDeleted.leftChild == null && nodeTobeDeleted.rightChild == null){
-				if (parentNode.leftChild != null){
-					parentNode.leftChild = null;
-					nodeTobeDeleted.parent = null;
-				}
-				else {
-					parentNode.rightChild = null;
-					nodeTobeDeleted.parent = null;
-				}
-			return;
-			}
-			
-			// non-leaf node having 1 child
-			if (nodeTobeDeleted.leftChild == null || nodeTobeDeleted.rightChild == null) {
-				// the node doesn't have a left child
-				if (nodeTobeDeleted.leftChild == null) {
-					Node successor = nodeTobeDeleted.rightChild;
-					if (parentNode.leftChild != null ){
-						parentNode.leftChild = successor;
-						successor.parent = parentNode;
-						nodeTobeDeleted.parent = null;
+			// case 1 - leaf node or node has one child
+			if (nodeTobeDeleted.leftChild == null || nodeTobeDeleted.leftChild == null) {
+				if (nodeTobeDeleted.parent.leftChild instanceof Node && 
+					nodeTobeDeleted.parent.leftChild.key == nodeTobeDeleted.key ){
+					// its the left child
+					if (nodeTobeDeleted.leftChild instanceof Node) {
+						nodeTobeDeleted.parent.leftChild = nodeTobeDeleted.leftChild;
+						nodeTobeDeleted.leftChild.parent = nodeTobeDeleted.parent;
+					}
+					else if (nodeTobeDeleted.rightChild instanceof Node) {
+						nodeTobeDeleted.parent.leftChild = nodeTobeDeleted.rightChild;
+						nodeTobeDeleted.rightChild.parent = nodeTobeDeleted.parent;
 					}
 					else {
-						parentNode.rightChild = successor;
-						successor.parent = parentNode;
-						nodeTobeDeleted.parent = null;
+						nodeTobeDeleted.parent.leftChild = null;
 					}
 				}
-			   else {
-				// the node doesn't have a right child
-				   Node successor = nodeTobeDeleted.leftChild;
-				   if (parentNode.leftChild != null){
-					  parentNode.rightChild = successor;
-					  successor.parent = parentNode;
-					  nodeTobeDeleted.parent = null;
-				   }
-				   else {
-					  parentNode.leftChild = successor;
-					  successor.parent = parentNode;
-					  nodeTobeDeleted.parent = null;
-				  }
-			   }
-			 return;
-			}
-			// non-leaf node having 2 children
-	
-			Node successor = nodeTobeDeleted.rightChild;
-			if (successor.leftChild != null) {
-				// the successor has a left child
-				if (parentNode.leftChild.key == nodeTobeDeleted.key){
-					parentNode.leftChild = successor;
-					successor.parent = parentNode;
-					successor.leftChild.leftChild = nodeTobeDeleted.leftChild;
-					nodeTobeDeleted.leftChild.parent = successor.leftChild;
+				else {
+					// its the right child
+					if (nodeTobeDeleted.leftChild instanceof Node) {
+						nodeTobeDeleted.parent.rightChild = nodeTobeDeleted.leftChild;
+						nodeTobeDeleted.leftChild.parent = nodeTobeDeleted.parent;
+					}
+					else if (nodeTobeDeleted.rightChild instanceof Node) {
+						nodeTobeDeleted.parent.rightChild = nodeTobeDeleted.rightChild;
+						nodeTobeDeleted.rightChild.parent = nodeTobeDeleted.parent;
+					}
+					else {
+						nodeTobeDeleted.parent.rightChild = null;
+					}
+					
+				}
+				nodeTobeDeleted = null;
+	    	}
+			// case 2 - node has 2 children
+			else {
+				Node nextLarger = nextLarger(nodeTobeDeleted.key);
+				nextLarger.parent = nodeTobeDeleted.parent;
+				if ( nodeTobeDeleted.parent.leftChild instanceof Node && 
+					 nodeTobeDeleted.parent.leftChild.key == nodeTobeDeleted.key){
+					// its a left child
+					nodeTobeDeleted.parent.leftChild = nextLarger;
 				}
 				else {
-					parentNode.rightChild = successor;
-					successor.parent = parentNode;
-					successor.leftChild = nodeTobeDeleted.leftChild;
-					nodeTobeDeleted.leftChild.parent = successor;
-				}
+					// its a right child
+					nodeTobeDeleted.parent.rightChild = nextLarger;
+				}			
 			}
-			}
-			*/
-
+		}
 
 	}
 	

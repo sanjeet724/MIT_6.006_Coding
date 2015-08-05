@@ -42,17 +42,17 @@ public class BSTDriver {
 		bst.InorderTraversal();
 		System.out.println("\nHeight of the BST before delete is: " + bst.getHeightofBST());
 		// bst.RepresentationInvariant();
-		System.out.println("Enter the key you want to find next larger: ");
+		// System.out.println("Enter the key you want to find next larger: ");
+		System.out.println("Enter the key you want to delete: ");
 		Scanner in = new Scanner(System.in);
 		int keyTobeDeleted = in.nextInt();
-		/*
+		
 		bst.deleteNode(keyTobeDeleted);
 		System.out.println("Inorder Traversal after delete: ");
 		bst.InorderTraversal();
 		System.out.println("\nHeight of the BST after delete is: " + bst.getHeightofBST());
-		*/
-		// System.out.println("Enter the key you want to delete: ");
-	
+
+		/*
 		Node nextLarger = bst.nextLarger(keyTobeDeleted);
 		
 		if (nextLarger == null) {
@@ -61,6 +61,7 @@ public class BSTDriver {
 		else {
 			System.out.println("nextLarger is: " + nextLarger.key);
 		}
+		*/
 		in.close();
 	}
 }
