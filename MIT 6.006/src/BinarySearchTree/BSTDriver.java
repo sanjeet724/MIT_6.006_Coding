@@ -9,12 +9,21 @@ public class BSTDriver {
 		BST bst = new BST();
 		Random randomGenerator = new Random();
 		// insert some nodes
-		for (int i = 0; i < 10; i++){
-			Node n = new Node(randomGenerator.nextInt(100));
+		int numOfNodes = 10;
+		System.out.println("Inserting some random keys: ");
+		for (int i = 0; i < numOfNodes; i++){
+			int randomNumber = randomGenerator.nextInt(100);
+			Node n = new Node(randomNumber);
 			bst.insertNode(n);
+			if (i < numOfNodes-1){
+				System.out.printf("%02d-->", randomNumber);
+			}
+			else {
+				System.out.printf("%02d", randomNumber);
+			}
 		}
 		Node min = bst.FindMin();
-		System.out.printf("Minimum of the BST is %02d \n", min.key);
+		System.out.printf("\nMinimum of the BST is %02d \n", min.key);
 		Node max = bst.FindMax();
 		System.out.printf("Maximum of the BST is %02d \n", max.key);
 		// find a given key - we have 2 implementations for search

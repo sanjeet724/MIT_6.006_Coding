@@ -39,8 +39,7 @@ public class BST {
 		else {
 			y.rightChild = n;
 		}
-		System.out.printf("%02d key Inserted", n.key);
-		System.out.println();
+		//System.out.printf("%02d-->", n.key);
 	}
 	
 	public Node FindMin(){
