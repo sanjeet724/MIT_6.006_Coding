@@ -17,7 +17,7 @@ public class BST {
 	// Insertion
 	public void insertNode (Node n){
 		Node y = null;
-		Node x = root; // pointer to find the position of insert
+		Node x = this.root; // pointer to find the position of insert
 		while (x != null){
 			// find the position of insert
 			y = x;
@@ -30,8 +30,8 @@ public class BST {
 		}
 		n.parent = y;
 		if (y == null) {
-			root = n;
-			current = n;
+			this.root = n;
+			this.current = n;
 		}
 		else if(n.key < y.key){
 			y.leftChild = n;
@@ -60,25 +60,25 @@ public class BST {
 	}
 	
 	public Node RecursiveSearch(int k) {
-		Node x = current;
+		Node x = this.current;
 		// base case
 		if  (x == null || k == x.key){
-			current = root; // reset the current pointer
+			this.current = this.root; // reset the current pointer
 			return x;
 		}
 		// recursion
 		if (k <  x.key){
-			current = x.leftChild;
+			this.current = x.leftChild;
 			return RecursiveSearch(k);
 			}
 		else {
-			current = x.rightChild;
+			this.current = x.rightChild;
 			return RecursiveSearch(k);
 			}
 	}
 	
 	public Node IterativeSearch(int k) {
-		Node x = root;
+		Node x = this.root;
 		while (x != null && k != x.key){
 			if (k < x.key){
 				x = x.leftChild;
@@ -92,17 +92,17 @@ public class BST {
 	
 	// In-order Traversal
 	public void InorderTraversal(){
-		 Node x = current;
+		 Node x = this.current;
 		 if ( x != null){
-			 current = x.leftChild;
+			 this.current = x.leftChild;
 			 InorderTraversal();
 			 System.out.printf("%02d ", x.key);
-			 current = x.rightChild;
+			 this.current = x.rightChild;
 			 InorderTraversal();
 		 }
 		 else {
 			 // reset the current pointer
-			 current = root;
+			 this.current = root;
 		 }
 	}
 	// height of a node = length (# edges) of longest downward path to a leaf
@@ -140,31 +140,19 @@ public class BST {
 			return;
 		}
 		else {
-			System.out.println("Node to be deleted: " + nodeTobeDeleted.key);
-			//System.out.println("Node's parent: " + nodeTobeDeleted.parent.key);
-			/*
-			if ( nodeTobeDeleted.leftChild == null && nodeTobeDeleted.leftChild == null) {
+			if (nodeTobeDeleted.leftChild == null && nodeTobeDeleted.leftChild == null) {
 				// leaf node
-				if (nodeTobeDeleted.parent.leftChild == null ){
-					// node to be deleted was right child;
-					System.out.println("Node's rightChild: " + nodeTobeDeleted.parent.leftChild.key);
-					nodeTobeDeleted.parent.rightChild = null;
-					nodeTobeDeleted.parent = null;
-					nodeTobeDeleted = null;
-				}
-				else if ( nodeTobeDeleted.parent.rightChild == null) {
-					// node to be deleted was left child;
-					System.out.println("Node's leftChild: " + nodeTobeDeleted.parent.rightChild.key);
+				if (nodeTobeDeleted.parent.leftChild instanceof Node ){
+					// node to be deleted was left child
 					nodeTobeDeleted.parent.leftChild = null;
-					nodeTobeDeleted.parent = null;
 					nodeTobeDeleted = null;
 				}
 				else {
-					System.out.println("Printing stuff here");
+					// node to be deleted was right child;
+					nodeTobeDeleted.parent.rightChild = null;
+					nodeTobeDeleted = null;
 				}
-			}
-			*/
-			
+		}	
 		}
 		/*
 		if (nodeTobeDeleted != null ){

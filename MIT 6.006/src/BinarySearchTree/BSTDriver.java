@@ -2,14 +2,14 @@ package BinarySearchTree;
 import java.util.Random;
 import java.util.Scanner;
 
-public class driver {
+public class BSTDriver {
 
 	public static void main(String[] args) {
 		
 		BST bst = new BST();
 		Random randomGenerator = new Random();
 		// insert some nodes
-		for (int i = 0; i < 3; i++){
+		for (int i = 0; i < 10; i++){
 			Node n = new Node(randomGenerator.nextInt(100));
 			bst.insertNode(n);
 		}
@@ -27,17 +27,21 @@ public class driver {
 		}
 		else {
 			System.out.println("Key found\n");
-		}*/
-		System.out.println("Inorder Traversal: ");
+		}
+		*/
+		System.out.println("Inorder Traversal before delete: ");
 		bst.InorderTraversal();
-		System.out.println("\nHeight of the BST is: " + bst.getHeightofBST());
+		System.out.println("\nHeight of the BST before delete is: " + bst.getHeightofBST());
 		// bst.RepresentationInvariant();
-		System.out.println("Enter the Node you want to delete: ");
+		System.out.println("Enter the key you want to delete: ");
 		Scanner in = new Scanner(System.in);
 		int keyTobeDeleted = in.nextInt();
 		bst.deleteNode(keyTobeDeleted);
-		in.close();
+		System.out.println("Inorder Traversal after delete: ");
 		bst.InorderTraversal();
+		System.out.println("\nHeight of the BST after delete is: " + bst.getHeightofBST());
+
+		in.close();
 	}
 }
  
