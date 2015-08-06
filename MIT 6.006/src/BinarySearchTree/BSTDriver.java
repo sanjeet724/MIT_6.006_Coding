@@ -1,27 +1,20 @@
 package BinarySearchTree;
-import java.util.Random;
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class BSTDriver {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
-		BST bst = new BST();
-		Random randomGenerator = new Random();
-		// insert some nodes
-		int numOfNodes = 10;
-		System.out.println("Inserting some random keys: ");
-		for (int i = 0; i < numOfNodes; i++){
-			int randomNumber = randomGenerator.nextInt(100);
-			Node n = new Node(randomNumber);
+		BST bst = BST.getBST();
+		System.out.println("Reading the input file... ");
+		Scanner scanner = new Scanner(new File("inputKeys.txt"));
+		while (scanner.hasNextInt()){
+			Node n = new Node(scanner.nextInt());
 			bst.insertNode(n);
-			if (i < numOfNodes - 1){
-				System.out.printf("%02d-->", randomNumber);
-			}
-			else {
-				System.out.printf("%02d", randomNumber);
-			}
 		}
+		scanner.close();
 		Node min = bst.FindMin();
 		System.out.printf("\nMinimum of the BST is %02d \n", min.key);
 		Node max = bst.FindMax();

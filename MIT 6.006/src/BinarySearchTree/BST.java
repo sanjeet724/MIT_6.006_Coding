@@ -6,11 +6,18 @@ public class BST {
 	int numberOfNodes;
 	int heightOfTree;
 	
-	public BST() {
+	private static BST bst = new BST();
+	
+	private BST() {
+		// private constructor for creating singleton class
 		root = null;
 		current = root;
 		numberOfNodes = 0;
 		heightOfTree = -2;
+	}
+	
+	public static BST getBST() {
+		return bst;
 	}
 	
 	// Insertion
@@ -38,6 +45,7 @@ public class BST {
 		else {
 			y.rightChild = n;
 		}
+		System.out.println("Inserting key: " + n.key);
 	}
 	
 	public Node FindMin(){
@@ -208,7 +216,7 @@ public class BST {
 					&& nodeTobeDeleted.rightChild instanceof Node) {
 				System.out.println("Case 2: Node with 2 children");
 				Node nextLarger = nextLarger(nodeTobeDeleted.key);
-				nextLarger.parent = nodeTobeDeleted.parent;
+				nextLarger.parent = nodeTobeDeleted.parent;		
 				if (checkLeftChild(nodeTobeDeleted)){
 					// its a left child
 					nodeTobeDeleted.parent.leftChild = nextLarger;
@@ -216,7 +224,8 @@ public class BST {
 				else {
 					// its a right child
 					nodeTobeDeleted.parent.rightChild = nextLarger;
-				}	
+				}
+				nextLarger.leftChild = nodeTobeDeleted.leftChild;
 			return;
 			}
 			// case 3 - node has 1 child
