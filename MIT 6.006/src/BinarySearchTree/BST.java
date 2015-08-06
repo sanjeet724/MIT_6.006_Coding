@@ -1,6 +1,5 @@
 package BinarySearchTree;
 
-
 public class BST {
 	Node root;
 	Node current; 
@@ -108,7 +107,7 @@ public class BST {
 	// height of a leaf node = 0
 	// height of a null node = -1
 	public int getHeightofBST(){
-		Node x = current;
+		Node x = this.current;
 		// base case
 		if ( x == null) {
 			current = root; // reset the current pointer to root
@@ -173,6 +172,15 @@ public class BST {
     	}
 	}
 	
+	public boolean checkLeftChild (Node n) {
+		if (n.parent.leftChild instanceof Node) {
+			if (n.parent.leftChild.key == n.key){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public void deleteNode(int k){
 		Node nodeTobeDeleted = IterativeSearch(k);
 		if (nodeTobeDeleted == null ) {
@@ -180,53 +188,65 @@ public class BST {
 			return;
 		}
 		else {
-			// case 1 - leaf node or node has one child
-			if (nodeTobeDeleted.leftChild == null || nodeTobeDeleted.leftChild == null) {
-				if (nodeTobeDeleted.parent.leftChild instanceof Node && 
-					nodeTobeDeleted.parent.leftChild.key == nodeTobeDeleted.key ){
-					// its the left child
-					if (nodeTobeDeleted.leftChild instanceof Node) {
-						nodeTobeDeleted.parent.leftChild = nodeTobeDeleted.leftChild;
-						nodeTobeDeleted.leftChild.parent = nodeTobeDeleted.parent;
-					}
-					else if (nodeTobeDeleted.rightChild instanceof Node) {
-						nodeTobeDeleted.parent.leftChild = nodeTobeDeleted.rightChild;
-						nodeTobeDeleted.rightChild.parent = nodeTobeDeleted.parent;
-					}
-					else {
-						nodeTobeDeleted.parent.leftChild = null;
-					}
+			// case 1 - leaf node 
+			if (nodeTobeDeleted.leftChild == null
+				&& nodeTobeDeleted.rightChild == null){
+				System.out.println("Case 1: Leaf Node");
+				if (checkLeftChild(nodeTobeDeleted)) {
+					// this means nodeTobeDeleted was a leftchild
+					nodeTobeDeleted.parent.leftChild = null;
+					nodeTobeDeleted = null;
 				}
 				else {
-					// its the right child
-					if (nodeTobeDeleted.leftChild instanceof Node) {
-						nodeTobeDeleted.parent.rightChild = nodeTobeDeleted.leftChild;
-						nodeTobeDeleted.leftChild.parent = nodeTobeDeleted.parent;
-					}
-					else if (nodeTobeDeleted.rightChild instanceof Node) {
-						nodeTobeDeleted.parent.rightChild = nodeTobeDeleted.rightChild;
-						nodeTobeDeleted.rightChild.parent = nodeTobeDeleted.parent;
-					}
-					else {
-						nodeTobeDeleted.parent.rightChild = null;
-					}
-					
+					nodeTobeDeleted.parent.rightChild = null;
+					nodeTobeDeleted = null;
 				}
-				nodeTobeDeleted = null;
-	    	}
+			return;
+			}
 			// case 2 - node has 2 children
-			else {
+			else if (nodeTobeDeleted.leftChild instanceof Node 
+					&& nodeTobeDeleted.rightChild instanceof Node) {
+				System.out.println("Case 2: Node with 2 children");
 				Node nextLarger = nextLarger(nodeTobeDeleted.key);
 				nextLarger.parent = nodeTobeDeleted.parent;
-				if ( nodeTobeDeleted.parent.leftChild instanceof Node && 
-					 nodeTobeDeleted.parent.leftChild.key == nodeTobeDeleted.key){
+				if (checkLeftChild(nodeTobeDeleted)){
 					// its a left child
 					nodeTobeDeleted.parent.leftChild = nextLarger;
 				}
 				else {
 					// its a right child
 					nodeTobeDeleted.parent.rightChild = nextLarger;
-				}			
+				}	
+			return;
+			}
+			// case 3 - node has 1 child
+			else {
+				System.out.println("Case 2: Node with 1 child");
+				if (nodeTobeDeleted.leftChild != null){
+					// node has left child
+					nodeTobeDeleted.leftChild.parent = nodeTobeDeleted.parent;
+					if (checkLeftChild(nodeTobeDeleted)) {
+						nodeTobeDeleted.parent.leftChild = nodeTobeDeleted.leftChild;
+						nodeTobeDeleted = null;
+					}
+					else {
+						nodeTobeDeleted.parent.rightChild = nodeTobeDeleted.leftChild;
+						nodeTobeDeleted = null;
+					}
+				}
+				else {
+					// node has right child
+					nodeTobeDeleted.rightChild.parent = nodeTobeDeleted.parent;
+					if (checkLeftChild(nodeTobeDeleted)) {
+						nodeTobeDeleted.parent.leftChild = nodeTobeDeleted.rightChild;
+						nodeTobeDeleted = null;
+					}
+					else {
+						nodeTobeDeleted.parent.rightChild = nodeTobeDeleted.rightChild;
+						nodeTobeDeleted = null;
+					}
+				}
+			return;
 			}
 		}
 

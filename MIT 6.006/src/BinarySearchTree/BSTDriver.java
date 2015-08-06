@@ -9,7 +9,7 @@ public class BSTDriver {
 		BST bst = new BST();
 		Random randomGenerator = new Random();
 		// insert some nodes
-		int numOfNodes = 5;
+		int numOfNodes = 10;
 		System.out.println("Inserting some random keys: ");
 		for (int i = 0; i < numOfNodes; i++){
 			int randomNumber = randomGenerator.nextInt(100);
