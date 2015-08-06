@@ -195,71 +195,83 @@ public class BST {
 			System.out.println("No such node found");
 			return;
 		}
+
+		if (nodeTobeDeleted.getLeft() == null && nodeTobeDeleted.getRight() == null) {
+			System.out.println("Case 1: Leaf Node");
+			nodeTobeDeleted = null;
+			return;
+		}
+		else if (nodeTobeDeleted.getLeft() != null && nodeTobeDeleted.getRight() != null) {
+			System.out.println("Case 1: Node has 2 children");
+			return;
+		}
 		else {
-			// case 1 - leaf node 
-			if (nodeTobeDeleted.leftChild == null
-				&& nodeTobeDeleted.rightChild == null){
-				System.out.println("Case 1: Leaf Node");
-				if (checkLeftChild(nodeTobeDeleted)) {
-					// this means nodeTobeDeleted was a leftchild
-					nodeTobeDeleted.parent.leftChild = null;
-					nodeTobeDeleted = null;
-				}
-				else {
-					nodeTobeDeleted.parent.rightChild = null;
-					nodeTobeDeleted = null;
-				}
-			return;
+			System.out.println("Case 1: Node has only 1 child");
+			if (nodeTobeDeleted.getLeft() != null){
+				// Node has a left Child
+				nodeTobeDeleted.leftChild.parent = nodeTobeDeleted.parent;
+				nodeTobeDeleted.resetChildPointers();
 			}
-			// case 2 - node has 2 children
-			else if (nodeTobeDeleted.leftChild instanceof Node 
-					&& nodeTobeDeleted.rightChild instanceof Node) {
-				System.out.println("Case 2: Node with 2 children");
-				Node nextLarger = nextLarger(nodeTobeDeleted.key);
-				nextLarger.parent = nodeTobeDeleted.parent;		
-				if (checkLeftChild(nodeTobeDeleted)){
-					// its a left child
-					nodeTobeDeleted.parent.leftChild = nextLarger;
-				}
-				else {
-					// its a right child
-					nodeTobeDeleted.parent.rightChild = nextLarger;
-				}
-				nextLarger.leftChild = nodeTobeDeleted.leftChild;
-			return;
-			}
-			// case 3 - node has 1 child
 			else {
-				System.out.println("Case 2: Node with 1 child");
-				if (nodeTobeDeleted.leftChild != null){
-					// node has left child
-					nodeTobeDeleted.leftChild.parent = nodeTobeDeleted.parent;
-					if (checkLeftChild(nodeTobeDeleted)) {
-						nodeTobeDeleted.parent.leftChild = nodeTobeDeleted.leftChild;
-						nodeTobeDeleted = null;
-					}
-					else {
-						nodeTobeDeleted.parent.rightChild = nodeTobeDeleted.leftChild;
-						nodeTobeDeleted = null;
-					}
-				}
-				else {
-					// node has right child
-					nodeTobeDeleted.rightChild.parent = nodeTobeDeleted.parent;
-					if (checkLeftChild(nodeTobeDeleted)) {
-						nodeTobeDeleted.parent.leftChild = nodeTobeDeleted.rightChild;
-						nodeTobeDeleted = null;
-					}
-					else {
-						nodeTobeDeleted.parent.rightChild = nodeTobeDeleted.rightChild;
-						nodeTobeDeleted = null;
-					}
-				}
+				// Node has a right Child
+				nodeTobeDeleted.rightChild.parent = nodeTobeDeleted.parent;
+				nodeTobeDeleted.resetChildPointers();
+			}
+			nodeTobeDeleted = null;
 			return;
 			}
 		}
+			
+			
+			
+			
+			// case 2 - node has 2 children
+//		if (nodeTobeDeleted.leftChild instanceof Node 
+//					&& nodeTobeDeleted.rightChild instanceof Node) {
+//				System.out.println("Case 2: Node with 2 children");
+//				Node nextLarger = nextLarger(nodeTobeDeleted.key);
+//				nextLarger.parent = nodeTobeDeleted.parent;		
+//				if (checkLeftChild(nodeTobeDeleted)){
+//					// its a left child
+//					nodeTobeDeleted.parent.leftChild = nextLarger;
+//				}
+//				else {
+//					// its a right child
+//					nodeTobeDeleted.parent.rightChild = nextLarger;
+//				}
+//				nextLarger.leftChild = nodeTobeDeleted.leftChild;
+//			return;
+//			}
+//			// case 3 - node has 1 child
+//			else {
+//				System.out.println("Case 2: Node with 1 child");
+//				if (nodeTobeDeleted.leftChild != null){
+//					// node has left child
+//					nodeTobeDeleted.leftChild.parent = nodeTobeDeleted.parent;
+//					if (checkLeftChild(nodeTobeDeleted)) {
+//						nodeTobeDeleted.parent.leftChild = nodeTobeDeleted.leftChild;
+//						nodeTobeDeleted = null;
+//					}
+//					else {
+//						nodeTobeDeleted.parent.rightChild = nodeTobeDeleted.leftChild;
+//						nodeTobeDeleted = null;
+//					}
+//				}
+//				else {
+//					// node has right child
+//					nodeTobeDeleted.rightChild.parent = nodeTobeDeleted.parent;
+//					if (checkLeftChild(nodeTobeDeleted)) {
+//						nodeTobeDeleted.parent.leftChild = nodeTobeDeleted.rightChild;
+//						nodeTobeDeleted = null;
+//					}
+//					else {
+//						nodeTobeDeleted.parent.rightChild = nodeTobeDeleted.rightChild;
+//						nodeTobeDeleted = null;
+//					}
+//				}
+//			return;
+//			}
 
-	}
 	
 	public void RepresentationInvariant(){
 		System.out.println();
