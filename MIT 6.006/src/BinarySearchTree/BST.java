@@ -180,14 +180,6 @@ public class BST {
     	}
 	}
 	
-	public boolean checkLeftChild (Node n) {
-		if (n.parent.leftChild instanceof Node) {
-			if (n.parent.leftChild.key == n.key){
-				return true;
-			}
-		}
-		return false;
-	}
 	
 	public void deleteNode(int k){
 		Node nodeTobeDeleted = IterativeSearch(k);
@@ -195,70 +187,35 @@ public class BST {
 			System.out.println("No such node found");
 			return;
 		}
-		else {
-			// case 1 - leaf node 
-			if (nodeTobeDeleted.leftChild == null
-				&& nodeTobeDeleted.rightChild == null){
-				System.out.println("Case 1: Leaf Node");
-				if (checkLeftChild(nodeTobeDeleted)) {
-					// this means nodeTobeDeleted was a leftchild
-					nodeTobeDeleted.parent.leftChild = null;
-					nodeTobeDeleted = null;
-				}
-				else {
-					nodeTobeDeleted.parent.rightChild = null;
-					nodeTobeDeleted = null;
-				}
-			return;
-			}
-			// case 2 - node has 2 children
-			else if (nodeTobeDeleted.leftChild instanceof Node 
-					&& nodeTobeDeleted.rightChild instanceof Node) {
-				System.out.println("Case 2: Node with 2 children");
-				Node nextLarger = nextLarger(nodeTobeDeleted.key);
-				nextLarger.parent = nodeTobeDeleted.parent;		
-				if (checkLeftChild(nodeTobeDeleted)){
-					// its a left child
-					nodeTobeDeleted.parent.leftChild = nextLarger;
-				}
-				else {
-					// its a right child
-					nodeTobeDeleted.parent.rightChild = nextLarger;
-				}
-				nextLarger.leftChild = nodeTobeDeleted.leftChild;
-			return;
-			}
-			// case 3 - node has 1 child
-			else {
-				System.out.println("Case 2: Node with 1 child");
-				if (nodeTobeDeleted.leftChild != null){
-					// node has left child
-					nodeTobeDeleted.leftChild.parent = nodeTobeDeleted.parent;
-					if (checkLeftChild(nodeTobeDeleted)) {
-						nodeTobeDeleted.parent.leftChild = nodeTobeDeleted.leftChild;
-						nodeTobeDeleted = null;
-					}
-					else {
-						nodeTobeDeleted.parent.rightChild = nodeTobeDeleted.leftChild;
-						nodeTobeDeleted = null;
-					}
-				}
-				else {
-					// node has right child
-					nodeTobeDeleted.rightChild.parent = nodeTobeDeleted.parent;
-					if (checkLeftChild(nodeTobeDeleted)) {
-						nodeTobeDeleted.parent.leftChild = nodeTobeDeleted.rightChild;
-						nodeTobeDeleted = null;
-					}
-					else {
-						nodeTobeDeleted.parent.rightChild = nodeTobeDeleted.rightChild;
-						nodeTobeDeleted = null;
-					}
-				}
-			return;
-			}
+		// leaf node
+		if (nodeTobeDeleted.getLeft() == null && nodeTobeDeleted.getRight() == null) {
+			System.out.println("Case 1: Leaf Node");
+			nodeTobeDeleted.resetChildPointers(null, nodeTobeDeleted.isLeftChild());
+			nodeTobeDeleted = null;
+		    return;
 		}
-
+		// node has both left and right sub-trees
+		else if (nodeTobeDeleted.getLeft() != null && nodeTobeDeleted.getRight() != null){
+			System.out.println("Case 2: Node with 2 children");
+			Node successor = nextLarger(nodeTobeDeleted.key);
+			successor.parent = nodeTobeDeleted.parent;
+			nodeTobeDeleted.resetChildPointers(successor, nodeTobeDeleted.isLeftChild());
+			successor.leftChild = nodeTobeDeleted.leftChild;
+			nodeTobeDeleted = null;
+			return;
+		}
+		// node has one child
+		else {
+			System.out.println("Case 3: Node with 1 child");
+			if (nodeTobeDeleted.getLeft() != null) {
+				nodeTobeDeleted.resetParentChildPointers(true, nodeTobeDeleted.isLeftChild());
+			}
+			else {
+				nodeTobeDeleted.resetParentChildPointers(false, nodeTobeDeleted.isLeftChild());
+			}
+			nodeTobeDeleted = null;
+			return;
+		}
 	}
 	
 	public void RepresentationInvariant(){
