@@ -17,7 +17,7 @@ public class BSTDriver {
 		scanner.close();
 		Node min = bst.FindMin();
 		System.out.printf("\nMinimum of the BST is %02d \n", min.key);
-		Node max = bst.FindMax();
+		Node max = bst.FindMaxR();
 		System.out.printf("Maximum of the BST is %02d \n", max.key);
 		// find a given key - we have 2 implementations for search
 		// iterative and recursive

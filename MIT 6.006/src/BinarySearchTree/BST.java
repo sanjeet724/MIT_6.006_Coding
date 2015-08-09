@@ -64,6 +64,20 @@ public class BST {
 		return x;
 	}
 	
+	// Find Max Recursive 
+	public Node FindMaxR(){
+		Node x = this.current;
+		// base case 
+		if (x.getRight() == null) {
+			this.current = this.root; //reset current
+			return x;
+		}
+		else {
+			this.current = x.rightChild;
+			return FindMaxR();
+		}
+	}
+	
 	public Node RecursiveSearch(int k) {
 		Node x = this.current;
 		// base case
