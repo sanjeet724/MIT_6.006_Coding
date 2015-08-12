@@ -64,6 +64,20 @@ public class BST {
 		return x;
 	}
 	
+	// Find Max Recursive 
+	public Node FindMaxR(){
+		Node x = this.current;
+		// base case 
+		if (x.getRight() == null) {
+			this.current = this.root; //reset current
+			return x;
+		}
+		else {
+			this.current = x.rightChild;
+			return FindMaxR();
+		}
+	}
+	
 	public Node RecursiveSearch(int k) {
 		Node x = this.current;
 		// base case
@@ -180,14 +194,6 @@ public class BST {
     	}
 	}
 	
-	public boolean checkLeftChild (Node n) {
-		if (n.parent.leftChild instanceof Node) {
-			if (n.parent.leftChild.key == n.key){
-				return true;
-			}
-		}
-		return false;
-	}
 	
 	public void deleteNode(int k){
 		Node nodeTobeDeleted = IterativeSearch(k);
@@ -195,83 +201,36 @@ public class BST {
 			System.out.println("No such node found");
 			return;
 		}
-
+		// leaf node
 		if (nodeTobeDeleted.getLeft() == null && nodeTobeDeleted.getRight() == null) {
 			System.out.println("Case 1: Leaf Node");
+			nodeTobeDeleted.resetChildPointers(null, nodeTobeDeleted.isLeftChild());
+			nodeTobeDeleted = null;
+		    return;
+		}
+		// node has both left and right sub-trees
+		else if (nodeTobeDeleted.getLeft() != null && nodeTobeDeleted.getRight() != null){
+			System.out.println("Case 2: Node with 2 children");
+			Node successor = nextLarger(nodeTobeDeleted.key);
+			successor.parent = nodeTobeDeleted.parent;
+			nodeTobeDeleted.resetChildPointers(successor, nodeTobeDeleted.isLeftChild());
+			successor.leftChild = nodeTobeDeleted.leftChild;
 			nodeTobeDeleted = null;
 			return;
 		}
-		else if (nodeTobeDeleted.getLeft() != null && nodeTobeDeleted.getRight() != null) {
-			System.out.println("Case 1: Node has 2 children");
-			return;
-		}
+		// node has one child
 		else {
-			System.out.println("Case 1: Node has only 1 child");
-			if (nodeTobeDeleted.getLeft() != null){
-				// Node has a left Child
-				nodeTobeDeleted.leftChild.parent = nodeTobeDeleted.parent;
-				nodeTobeDeleted.resetChildPointers();
+			System.out.println("Case 3: Node with 1 child");
+			if (nodeTobeDeleted.getLeft() != null) {
+				nodeTobeDeleted.resetParentChildPointers(true, nodeTobeDeleted.isLeftChild());
 			}
 			else {
-				// Node has a right Child
-				nodeTobeDeleted.rightChild.parent = nodeTobeDeleted.parent;
-				nodeTobeDeleted.resetChildPointers();
+				nodeTobeDeleted.resetParentChildPointers(false, nodeTobeDeleted.isLeftChild());
 			}
 			nodeTobeDeleted = null;
 			return;
-			}
 		}
-			
-			
-			
-			
-			// case 2 - node has 2 children
-//		if (nodeTobeDeleted.leftChild instanceof Node 
-//					&& nodeTobeDeleted.rightChild instanceof Node) {
-//				System.out.println("Case 2: Node with 2 children");
-//				Node nextLarger = nextLarger(nodeTobeDeleted.key);
-//				nextLarger.parent = nodeTobeDeleted.parent;		
-//				if (checkLeftChild(nodeTobeDeleted)){
-//					// its a left child
-//					nodeTobeDeleted.parent.leftChild = nextLarger;
-//				}
-//				else {
-//					// its a right child
-//					nodeTobeDeleted.parent.rightChild = nextLarger;
-//				}
-//				nextLarger.leftChild = nodeTobeDeleted.leftChild;
-//			return;
-//			}
-//			// case 3 - node has 1 child
-//			else {
-//				System.out.println("Case 2: Node with 1 child");
-//				if (nodeTobeDeleted.leftChild != null){
-//					// node has left child
-//					nodeTobeDeleted.leftChild.parent = nodeTobeDeleted.parent;
-//					if (checkLeftChild(nodeTobeDeleted)) {
-//						nodeTobeDeleted.parent.leftChild = nodeTobeDeleted.leftChild;
-//						nodeTobeDeleted = null;
-//					}
-//					else {
-//						nodeTobeDeleted.parent.rightChild = nodeTobeDeleted.leftChild;
-//						nodeTobeDeleted = null;
-//					}
-//				}
-//				else {
-//					// node has right child
-//					nodeTobeDeleted.rightChild.parent = nodeTobeDeleted.parent;
-//					if (checkLeftChild(nodeTobeDeleted)) {
-//						nodeTobeDeleted.parent.leftChild = nodeTobeDeleted.rightChild;
-//						nodeTobeDeleted = null;
-//					}
-//					else {
-//						nodeTobeDeleted.parent.rightChild = nodeTobeDeleted.rightChild;
-//						nodeTobeDeleted = null;
-//					}
-//				}
-//			return;
-//			}
-
+	}
 	
 	public void RepresentationInvariant(){
 		System.out.println();

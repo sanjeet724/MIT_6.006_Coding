@@ -7,41 +7,79 @@ class Node {
 	Node rightChild;
 	
 	public Node(int k) {
-		this.key = k;
-		this.parent = null;
-		this.leftChild = null;
-		this.rightChild = null;
+		key = k;
+		parent = null;
+		leftChild = null;
+		rightChild = null;
 	}
 	
-	public Node getLeft (){
-		if (this.leftChild instanceof Node) {
+	// to avoid nullpointer exception errors
+	public Node getLeft() {
+		if (this.leftChild instanceof Node){
 			return this.leftChild;
 		}
 		return null;
 	}
 	
-	public Node getRight (){
-		if (this.rightChild instanceof Node) {
+	public Node getRight() {
+		if (this.rightChild instanceof Node){
 			return this.rightChild;
 		}
 		return null;
 	}
 	
-	public Node getParent (){
+	public Node getParent() {
 		if (this.parent instanceof Node){
 			return this.parent;
 		}
 		return null;
 	}
 	
-	public void resetChildPointers(){
-		if (this.getParent().getLeft() != null) {
-			// it was a left child
-			this.parent.leftChild = this.leftChild;
+	// checks if the node is a left child
+	public boolean isLeftChild() {
+		if (this.getParent().getLeft() instanceof Node && 
+			    this.getParent().getLeft().key == this.key){
+			return true;
+		}
+		return false;
+	}
+	
+	// reset child pointer
+	public void resetChildPointers(Node n, boolean isleftChild){
+		if (isleftChild) {
+			this.parent.leftChild = n;
 		}
 		else {
-			// it was a right child
-			this.parent.rightChild = this.leftChild;
+			this.parent.rightChild = n;
 		}
 	}
+	
+    // resets the left/right child and parent pointers
+	public void resetParentChildPointers(boolean hasLeftChild, boolean isLeftChild){
+		if (hasLeftChild) {
+			this.leftChild.parent = this.parent;
+			if (isLeftChild) {
+				this.parent.leftChild = this.leftChild;
+			}
+			else {
+				this.parent.rightChild = this.leftChild;
+			}
+			
+		}
+		// has a right child
+		else {
+			this.rightChild.parent = this.parent;
+			if (isLeftChild) {
+				this.parent.leftChild = this.rightChild;
+			}
+			else {
+				this.parent.rightChild = this.rightChild;
+			}
+			
+		}
+	}
+	
+	
+	
+	
 }
