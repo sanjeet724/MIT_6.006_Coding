@@ -1,3 +1,8 @@
 /bin/
-/.metadata
-/.settings
+*.cab
+*.msi
+*.msm
+*.msp
+\.metadata
+\.recommenders
+\sas
