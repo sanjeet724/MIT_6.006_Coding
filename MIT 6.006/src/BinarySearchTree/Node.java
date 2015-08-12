@@ -54,7 +54,6 @@ class Node {
 		}
 	}
 	
-	
     // resets the left/right child and parent pointers
 	public void resetParentChildPointers(boolean hasLeftChild, boolean isLeftChild){
 		if (hasLeftChild) {
